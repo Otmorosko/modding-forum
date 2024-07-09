@@ -10,6 +10,12 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// Routes
+const userRoutes = require('./routes/user');
+const topicRoutes = require('./routes/topic');
+app.use('/api/users', userRoutes);
+app.use('/api/topics', topicRoutes);
+
 // Test route
 app.get('/', (req, res) => {
   res.send('Hello from the backend!');

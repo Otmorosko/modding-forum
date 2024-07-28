@@ -2,6 +2,28 @@
 @import 'variables';
 
 body {
-  background-color: $primary-color;
-  color: $secondary-color;
+  background: radial-gradient(circle at top left, rgba(0, 0, 0, 0.5), transparent 70%),
+              radial-gradient(circle at top right, rgba(0, 0, 0, 0.5), transparent 70%),
+              radial-gradient(circle at bottom left, rgba(0, 0, 0, 0.5), transparent 70%),
+              radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.5), transparent 70%),
+              radial-gradient(circle, #1a75ff, #004080);
+  color: #fff;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
+h1 {
+  margin: 0;
+  font-size: 5em;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+header {
+  padding: 40px;
+  text-align: center;
+  margin-top: 7%;
+}
+

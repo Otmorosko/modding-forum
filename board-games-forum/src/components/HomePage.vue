@@ -2,17 +2,22 @@
 
 <template>
   <div>
-    <h1>Welcome to the Board Games Forum</h1>
-    <p>This is the home page. Use the navigation to explore the forum.</p>
+    <AppHeader />
+    <router-link to="/login">Go to Login Page</router-link>
   </div>
 </template>
 
 <script>
+import AppHeader from './AppHeader.vue';
+
 export default {
   name: 'HomePage',
+  components: {
+    AppHeader
+  }
 };
 </script>
 
 <style>
-/* Dodaj swoje style tutaj */
+
 </style>

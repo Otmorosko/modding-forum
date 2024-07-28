@@ -54,6 +54,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+@import '../styles/_variables.scss';
 
+
+h1 {
+  color: $primary-color;
+}
 </style>

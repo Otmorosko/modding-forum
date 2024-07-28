@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'Chat',
+  name: 'ChatComponent',
   data() {
     return {
       messages: [],

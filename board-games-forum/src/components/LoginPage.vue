@@ -1,5 +1,7 @@
+<!-- src/components/LoginPage.vue -->
+
 <template>
-  <div class="login">
+  <div>
     <h2>Login</h2>
     <form @submit.prevent="login">
       <div>
@@ -12,29 +14,42 @@
       </div>
       <button type="submit">Login</button>
     </form>
+    <p v-if="message">{{ message }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LoginPage',
   data() {
     return {
       email: '',
       password: '',
+      message: ''
     };
   },
   methods: {
-    login() {
-      console.log('User logged in:', this.email, this.password);
-    },
-  },
+    async login() {
+      try {
+        const response = await fetch('http://localhost:3000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password
+          })
+        });
+        if (response.ok) {
+          this.message = 'User logged in successfully!';
+        } else {
+          const errorData = await response.json();
+          this.message = errorData.message || 'Login failed.';
+        }
+      } catch (error) {
+        this.message = 'An error occurred: ' + error.message;
+      }
+    }
+  }
 };
 </script>
-
-<style scoped>
-.login {
-  max-width: 400px;
-  margin: auto;
-}
-</style>

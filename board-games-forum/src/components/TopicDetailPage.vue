@@ -1,5 +1,7 @@
+<!-- src/components/TopicDetailPage.vue -->
+
 <template>
-  <div class="topic-detail">
+  <div>
     <h2>{{ topic.title }}</h2>
     <p>{{ topic.content }}</p>
   </div>
@@ -7,21 +9,20 @@
 
 <script>
 export default {
-  name: 'TopicDetail',
   data() {
     return {
-      topic: {
-        title: 'Sample Topic',
-        content: 'This is the content of the topic.',
-      },
+      topic: {}
     };
   },
+  async created() {
+    const topicId = this.$route.params.id;
+    try {
+      const response = await fetch(`http://localhost:3000/api/topics/${topicId}`);
+      const data = await response.json();
+      this.topic = data;
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
 };
 </script>
-
-<style scoped>
-.topic-detail {
-  max-width: 800px;
-  margin: auto;
-}
-</style>

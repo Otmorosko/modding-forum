@@ -1,9 +1,11 @@
+<!-- src/components/TopicListPage.vue -->
+
 <template>
-  <div class="topic-list">
+  <div>
     <h2>Topics</h2>
     <ul>
       <li v-for="topic in topics" :key="topic.id">
-        {{ topic.title }}
+        <router-link :to="{ name: 'TopicDetail', params: { id: topic.id } }">{{ topic.title }}</router-link>
       </li>
     </ul>
   </div>
@@ -11,22 +13,19 @@
 
 <script>
 export default {
-  name: 'TopicList',
   data() {
     return {
-      topics: [
-        { id: 1, title: 'Topic 1' },
-        { id: 2, title: 'Topic 2' },
-        { id: 3, title: 'Topic 3' },
-      ],
+      topics: []
     };
   },
+  async created() {
+    try {
+      const response = await fetch('http://localhost:3000/api/topics');
+      const data = await response.json();
+      this.topics = data;
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
 };
 </script>
-
-<style scoped>
-.topic-list {
-  max-width: 800px;
-  margin: auto;
-}
-</style>

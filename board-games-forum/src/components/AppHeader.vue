@@ -2,7 +2,7 @@
 
 <template>
   <header>
-    <h1>Board Games Forum</h1>
+    <h1>Board Game Central</h1>
 
   </header>
 </template>

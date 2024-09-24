@@ -2,6 +2,7 @@
 
 <template>
   <div id="app">
+    <div class="navbar-gradient"></div>
     <router-view></router-view>
   </div>
 </template>
@@ -12,6 +13,8 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+#app {
+  position: relative;
+}
 </style>

@@ -1,93 +1,62 @@
 .home-page {
-    padding: 20px;
-  }
-  
-  .main-section {
-    text-align: center;
-    margin-bottom: 50px;
-  }
-  
-  .explore-btn {
-    padding: 10px 20px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .featured-mods, .latest-discussions {
-    margin: 70px 0;
-  }
-  
-  .mods-grid, .discussions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 0 10px;
-  }
-  
+  padding: 20px;
+  background-color: #e0e0e0; /* Jasnoszare tło */
+  border-radius: 10px;
+}
 
-  .mods-grid > * {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    background-color: #999999;
-    border-radius: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .mods-grid img {
-    width: 100%;
-    height: 150px; 
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  .mods-grid h3 {
-    margin: 15px 0 10px;
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .mods-grid p {
-    font-size: 1em;
-    color: #555;
-    line-height: 1.5;
-  }
-  
-  .mods-grid > *:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  }
-  
+.main-section {
+  text-align: center;
+  margin-bottom: 50px;
+  background-color: #333; /* Ciemniejsze tło */
+  color: #fff; /* Jasny kolor tekstu */
+  padding: 60px 40px; /* Zwiększony padding */
+  border-radius: 10px; /* Zaokrąglone rogi */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Dodanie cienia dla kontrastu */
+}
 
-  .discussions-grid > * {
-    background-color: #999999;
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .discussions-grid h3 {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .discussions-grid p {
-    font-size: 1em;
-    color: #555;
-    line-height: 1.5;
-  }
-  
-  .discussions-grid > *:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  }
-  
+.main-section h1 {
+  font-size: 2.5em; /* Większy rozmiar czcionki */
+  font-weight: bold;
+  color: #ffffff; /* Jasny tekst */
+  margin-bottom: 20px;
+}
+
+.main-section p {
+  font-size: 1.2em; /* Większy tekst */
+  color: #cccccc; /* Trochę jaśniejszy tekst dla lepszej czytelności */
+}
+
+.explore-btn {
+  padding: 12px 25px;
+  background-color: #ff9900; /* Jaśniejszy, bardziej widoczny przycisk */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.explore-btn:hover {
+  background-color: #ff7700; /* Zmiana koloru po najechaniu */
+}
+
+.featured-mods,
+.latest-discussions {
+  margin: 70px 0;
+}
+
+.separator {
+  border-bottom: 2px solid #333;
+  margin: 40px 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Dodanie cienia */
+}
+
+.mods-grid,
+.discussions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 0 10px;
+}

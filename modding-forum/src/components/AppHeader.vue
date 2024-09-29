@@ -1,19 +1,15 @@
 <template>
-  <header>
-  </header>
+  <div class="navbar-gradient">
+    <ul>
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/mods">Mods</router-link></li>
+      <li><router-link to="/forum">Forum</router-link></li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'AppHeader',
+  name: "AppHeader"
 };
 </script>
-
-<style scoped>
-header {
-  padding: 40px;
-  text-align: center;
-  margin-top: 7%;
-  color: #fff;
-}
-</style>

@@ -2,7 +2,7 @@
   <div class="mod-card">
     <img :src="imgSrc" alt="mod image" />
     <h3>{{ title }}</h3>
-    <p class="category">{{ category }}</p> <!-- Display the category -->
+    <p class="category">{{ category }}</p> 
     <p>{{ description }}</p>
   </div>
 </template>
@@ -13,14 +13,14 @@ export default {
     title: String,
     description: String,
     imgSrc: String,
-    category: String, // Add a new prop for category
+    category: String, 
   },
 };
 </script>
 
 <style scoped>
 .mod-card {
-  /* Existing styles */
+
   display: flex;
   flex-direction: column;
   align-items: center;

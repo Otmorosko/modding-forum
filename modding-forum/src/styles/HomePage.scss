@@ -1,34 +1,34 @@
 .home-page {
   padding: 20px;
-  background-color: #e0e0e0; /* Jasnoszare tło */
+  background-color: #e0e0e0;
   border-radius: 10px;
 }
 
 .main-section {
   text-align: center;
   margin-bottom: 50px;
-  background-color: #333; /* Ciemniejsze tło */
-  color: #fff; /* Jasny kolor tekstu */
-  padding: 60px 40px; /* Zwiększony padding */
-  border-radius: 10px; /* Zaokrąglone rogi */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Dodanie cienia dla kontrastu */
+  background-color: #333;
+  color: #fff;
+  padding: 60px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .main-section h1 {
-  font-size: 2.5em; /* Większy rozmiar czcionki */
+  font-size: 2.5em;
   font-weight: bold;
-  color: #ffffff; /* Jasny tekst */
+  color: #ffffff;
   margin-bottom: 20px;
 }
 
 .main-section p {
-  font-size: 1.2em; /* Większy tekst */
-  color: #cccccc; /* Trochę jaśniejszy tekst dla lepszej czytelności */
+  font-size: 1.2em;
+  color: #cccccc;
 }
 
 .explore-btn {
   padding: 12px 25px;
-  background-color: #ff9900; /* Jaśniejszy, bardziej widoczny przycisk */
+  background-color: #6c757d;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -39,7 +39,7 @@
 }
 
 .explore-btn:hover {
-  background-color: #ff7700; /* Zmiana koloru po najechaniu */
+  background-color: #5a6268; 
 }
 
 .featured-mods,
@@ -50,7 +50,7 @@
 .separator {
   border-bottom: 2px solid #333;
   margin: 40px 0;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Dodanie cienia */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .mods-grid,

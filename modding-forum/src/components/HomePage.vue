@@ -3,7 +3,7 @@
     <section class="main-section">
       <h1>Discover the Best Game Mods</h1>
       <p>Your one-stop destination for the latest and most popular mods for all your favorite games.</p>
-      <button class="explore-btn">Explore Mods</button>
+      <router-link to="/mods" class="explore-btn">Explore Mods</router-link>
     </section>
 
     <div class="separator"></div>

@@ -5,24 +5,26 @@ const nodemailer = require('nodemailer');
 const User = require('../models/user');
 const router = express.Router();
 
-const JWT_SECRET = 'your-secret-key'; 
+const JWT_SECRET = 'your-secret-key';
 
-// Konfiguracja nodemailer 
+// Konfiguracja nodemailer
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: 'WP',
   auth: {
-    user: 'your-email@gmail.com',
-    pass: 'your-email-password'
+    user: 'twoj-email@wp.pl', // Twój adres e-mail
+    pass: 'twoje-haslo' // Twoje hasło
   }
 });
 
-// Rejestracja
+// Rejestracja użytkownika
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
+  console.log('Rejestracja:', { username, email });  // Logowanie danych z rejestracji
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    // Generowanie tokenu potwierdzenia
+    // Generowanie tokenu potwierdzającego
     const verificationToken = jwt.sign(
       { email: email },
       JWT_SECRET,
@@ -37,12 +39,14 @@ router.post('/register', async (req, res) => {
       verificationToken
     });
 
+    console.log('Użytkownik utworzony. Token weryfikacyjny:', verificationToken);
+
     // Tworzenie linku potwierdzającego
     const confirmationLink = `http://localhost:3000/confirm-email?token=${verificationToken}`;
 
-    // Wysyłanie e-maila z linkiem potwierdzającym
+    // Wysyłanie e-maila potwierdzającego
     const mailOptions = {
-      from: 'your-email@gmail.com',
+      from: 'twoj-email@wp.pl',  // Twój adres e-mail
       to: email,
       subject: 'Confirm your email',
       html: `
@@ -52,57 +56,14 @@ router.post('/register', async (req, res) => {
       `
     };
 
+    // Testowanie i wysyłanie e-maila
     await transporter.sendMail(mailOptions);
+    console.log('E-mail potwierdzający wysłany do:', email);
 
     res.status(201).send('User registered. Please check your email to confirm.');
   } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-// Potwierdzanie e-maila
-router.get('/confirm-email', async (req, res) => {
-  const { token } = req.query;
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    
-    // Znajdowanie użytkownika po tokenie
-    const user = await User.findByVerificationToken(token);
-    if (!user) return res.status(400).send('Invalid token or user not found.');
-
-    // Aktualizacja statusu potwierdzenia
-    await User.updateVerificationStatus(user.id);
-
-    res.status(200).send('Email confirmed successfully!');
-  } catch (err) {
-    res.status(400).send('Invalid or expired token.');
-  }
-});
-
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log('SMTP connection failed:', error);
-  } else {
-    console.log('SMTP server is ready to send emails');
-  }
-});
-
-// Logowanie
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const users = await User.findByEmail(email);
-    if (users.length === 0) return res.status(404).send('User not found');
-    const user = users[0];
-    
-    if (!user.isVerified) return res.status(401).send('Please confirm your email first.');
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return res.status(401).send('Invalid password');
-    
-    res.send('User logged in');
-  } catch (err) {
-    res.status(500).send(err);
+    console.error('Błąd podczas rejestracji:', err);
+    res.status(500).send('Registration failed: ' + err.message);
   }
 });
 

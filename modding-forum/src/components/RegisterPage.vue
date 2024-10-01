@@ -1,5 +1,3 @@
-<!-- src/components/RegisterPage.vue -->
-
 <template>
   <div>
     <h2>Register</h2>
@@ -35,6 +33,12 @@ export default {
   methods: {
     async register() {
       try {
+        console.log('Wysyłam dane rejestracji:', {
+          username: this.username,
+          email: this.email,
+          password: this.password
+        });
+
         const response = await fetch('http://localhost:3000/api/users/register', {
           method: 'POST',
           headers: {
@@ -46,13 +50,19 @@ export default {
             password: this.password
           })
         });
+
+        console.log('Otrzymana odpowiedź z serwera:', response);
+
         if (response.ok) {
           this.message = 'User registered successfully!';
+          console.log('Rejestracja zakończona sukcesem');
         } else {
           const errorData = await response.json();
+          console.log('Błąd rejestracji:', errorData);
           this.message = errorData.message || 'Registration failed.';
         }
       } catch (error) {
+        console.error('Wystąpił błąd:', error);
         this.message = 'An error occurred: ' + error.message;
       }
     }
@@ -60,6 +70,6 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+/* Możesz dodać tutaj stylizację */
 </style>

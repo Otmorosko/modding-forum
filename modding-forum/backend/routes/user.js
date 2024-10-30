@@ -4,22 +4,45 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const { google } = require('google-auth-library');
 const User = require('../models/user');
 const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// Funkcja konfiguracji klienta OAuth2
+function getOAuth2Client() {
+  const oAuth2Client = new google.auth.OAuth2(
+    process.env.GMAIL_CLIENT_ID,
+    process.env.GMAIL_CLIENT_SECRET,
+    process.env.GMAIL_REDIRECT_URI
+  );
+
+  oAuth2Client.setCredentials({
+    refresh_token: process.env.GMAIL_REFRESH_TOKEN,
+  });
+
+  return oAuth2Client;
+}
+
 // Konfiguracja SMTP dla różnych dostawców
-function getSmtpConfig(email) {
+async function getSmtpConfig(email) {
   const domain = email.split('@')[1];
 
   if (domain === 'gmail.com') {
+    const oAuth2Client = getOAuth2Client();
+    const accessToken = await oAuth2Client.getAccessToken();
+    
     return {
       service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USER, // Dane z .env
-        pass: process.env.GMAIL_PASS // Dane z .env
-      }
+        type: 'OAuth2',
+        user: process.env.GMAIL_USER,
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken.token, // Pobierz token dostępu
+      },
     };
   } else if (domain === 'wp.pl') {
     return {
@@ -27,16 +50,16 @@ function getSmtpConfig(email) {
       port: 587,
       secure: false,
       auth: {
-        user: process.env.WP_USER, // Dane z .env
-        pass: process.env.WP_PASS // Dane z .env
-      }
+        user: process.env.WP_USER,
+        pass: process.env.WP_PASS,
+      },
     };
   } else {
     throw new Error('Unsupported email provider');
   }
 }
 
-// Rejestracja użytkownika
+// Rejestracja użytkownika - tylko e-mail
 router.post('/register', async (req, res) => {
   const { email } = req.body;
   try {
@@ -44,15 +67,13 @@ router.post('/register', async (req, res) => {
     await User.create({ email, verificationToken });
 
     const confirmationLink = `http://localhost:3000/set-credentials?token=${verificationToken}`;
-    
-    // Pobieranie konfiguracji SMTP na podstawie domeny e-mail
-    const transporter = nodemailer.createTransport(getSmtpConfig(email));
+    const transporter = nodemailer.createTransport(await getSmtpConfig(email));
 
     const mailOptions = {
-      from: 'noreply@yourapp.com', // Stały adres nadawcy
+      from: 'noreply@yourapp.com',
       to: email,
       subject: 'Confirm your email',
-      html: `<h1>Email Confirmation</h1><p>Click <a href="${confirmationLink}">here</a> to set your username and password.</p>`
+      html: `<h1>Email Confirmation</h1><p>Click <a href="${confirmationLink}">here</a> to set your username and password.</p>`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -63,7 +84,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Aktualizacja danych użytkownika (ustawianie nazwy i hasła)
+// Ustawianie nazwy użytkownika i hasła
 router.post('/set-credentials', async (req, res) => {
   const { token, username, password } = req.body;
   try {

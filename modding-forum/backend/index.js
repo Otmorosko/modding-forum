@@ -1,5 +1,7 @@
 // backend/index.js
 
+require('dotenv').config(); 
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -19,6 +21,12 @@ app.use('/api/topics', topicRoutes);
 // Test route
 app.get('/', (req, res) => {
   res.send('Hello from the backend!');
+});
+
+// Logging all incoming requests to aid debugging
+app.use((req, res, next) => {
+  console.log(`Received request: ${req.method} ${req.url}`);
+  next();
 });
 
 // Start server
